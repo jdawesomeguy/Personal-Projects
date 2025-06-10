@@ -85,6 +85,19 @@ def generate_names(num_names: int = 10, genre: str = 'Normal', middle: bool = Tr
 def main():
     genre = input("Enter the genre (Normal, Fantasy, Cyberpunk, Sci-Fi, Random, Super Random): ")
     middle = input("Include middle name? (yes/no): ").strip().lower() == 'yes'   
+    save_to_file = input("Save names to file? (yes/no): ").strip().lower() == 'yes'
+
+    if save_to_file:
+        filename = input("Enter the filename to save names: ")
+        with open(filename, 'w') as file:
+            file.write(f"Generated names in genre '{genre}' with middle name {'included' if middle else 'excluded'}:\n")
+            try:
+                names = generate_names(10, genre, middle)
+                for name in names:
+                    file.write(name + '\n')
+                print(f"Names saved to {filename}")
+            except ValueError as e:
+                print(e)
 
     try:
         names = generate_names(10, genre, middle)
